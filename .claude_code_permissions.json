@@ -1,0 +1,180 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/permissions-schema.json",
+  "version": "1.0",
+  "permissions": {
+    "filesystem": {
+      "allow_read": [
+        "**/*"
+      ],
+      "allow_write": [
+        "**/*"
+      ],
+      "allow_delete": [
+        "node_modules/**/*",
+        "dist/**/*",
+        "build/**/*",
+        ".next/**/*",
+        "coverage/**/*",
+        "*.log",
+        "**/*.log",
+        "temp/**/*",
+        "tmp/**/*"
+      ]
+    },
+    "bash": {
+      "allow_commands": [
+        "npm install",
+        "npm run *",
+        "npm start",
+        "npm test",
+        "npm run build",
+        "npm run dev",
+        "npm ci",
+        "yarn install",
+        "yarn *",
+        "pnpm install",
+        "pnpm *",
+        "docker-compose up *",
+        "docker-compose down *",
+        "docker-compose ps",
+        "docker-compose logs *",
+        "docker run *",
+        "docker ps *",
+        "docker stop *",
+        "docker start *",
+        "docker exec *",
+        "docker build *",
+        "docker images",
+        "docker rm *",
+        "docker rmi *",
+        "psql *",
+        "flyway *",
+        "node *",
+        "ts-node *",
+        "tsx *",
+        "git status",
+        "git add *",
+        "git commit *",
+        "git push *",
+        "git pull *",
+        "git checkout *",
+        "git branch *",
+        "git log *",
+        "git diff *",
+        "mkdir *",
+        "rm -rf *",
+        "cp *",
+        "mv *",
+        "chmod *",
+        "ls *",
+        "pwd",
+        "cd *",
+        "cat *",
+        "echo *",
+        "touch *",
+        "curl *",
+        "wget *",
+        "unzip *",
+        "tar *",
+        "gzip *",
+        "gunzip *",
+        "kill *",
+        "pkill *",
+        "ps *",
+        "netstat *",
+        "lsof *",
+        "which *",
+        "env",
+        "export *",
+        "source *"
+      ]
+    },
+    "network": {
+      "allow_fetch": [
+        "https://www.4byte.directory/api/*",
+        "https://eth.llamarpc.com",
+        "https://eth.llamarpc.com/*",
+        "https://*.infura.io/*",
+        "https://*.alchemy.com/*",
+        "https://*.quicknode.com/*",
+        "https://cloudflare-eth.com",
+        "https://cloudflare-eth.com/*",
+        "https://registry.npmjs.org/*",
+        "https://registry.yarnpkg.com/*",
+        "http://localhost:*",
+        "http://127.0.0.1:*",
+        "https://github.com/*",
+        "https://raw.githubusercontent.com/*"
+      ],
+      "allow_ports": [
+        3000,
+        5432,
+        5672,
+        15672,
+        8545,
+        8546
+      ]
+    },
+    "environment": {
+      "allow_read": [
+        "RABBITMQ_URL",
+        "POSTGRES_CONNECTION",
+        "POSTGRES_HOST",
+        "POSTGRES_PORT",
+        "POSTGRES_USER",
+        "POSTGRES_PASSWORD",
+        "POSTGRES_DB",
+        "ETHEREUM_START_BLOCK",
+        "ETHEREUM_END_BLOCK",
+        "WORKER_INSTANCES",
+        "NODE_ENV",
+        "PORT",
+        "DATABASE_URL",
+        "RPC_ENDPOINTS",
+        "NEXT_PUBLIC_*",
+        "PATH",
+        "HOME",
+        "USER"
+      ],
+      "allow_write": [
+        "NODE_ENV",
+        "PORT",
+        "RABBITMQ_URL",
+        "POSTGRES_CONNECTION",
+        "POSTGRES_HOST",
+        "POSTGRES_PORT",
+        "POSTGRES_USER",
+        "POSTGRES_PASSWORD",
+        "POSTGRES_DB",
+        "ETHEREUM_START_BLOCK",
+        "ETHEREUM_END_BLOCK",
+        "WORKER_INSTANCES",
+        "DATABASE_URL",
+        "RPC_ENDPOINTS",
+        "NEXT_PUBLIC_*"
+      ]
+    },
+    "auto_approve": {
+      "install_dependencies": true,
+      "build_commands": true,
+      "test_commands": true,
+      "docker_operations": true,
+      "database_migrations": true,
+      "file_creation": true,
+      "file_modification": true,
+      "directory_creation": true
+    }
+  },
+  "restrictions": {
+    "no_system_modifications": true,
+    "no_credential_exposure": true,
+    "sandbox_mode": false
+  },
+  "notes": [
+    "Este fichero define permisos amplios para el desarrollo del sistema de procesamiento de bloques Ethereum",
+    "Incluye permisos para: instalaciones, compilaciones, Docker, base de datos, sistema de ficheros",
+    "Los comandos de instalación, build, y operaciones Docker están auto-aprobados",
+    "Se permite acceso a APIs externas necesarias (4byte.directory, RPCs de Ethereum)",
+    "Los puertos 3000 (Next.js), 5432 (PostgreSQL), 5672/15672 (RabbitMQ) están permitidos"
+  ]
+}

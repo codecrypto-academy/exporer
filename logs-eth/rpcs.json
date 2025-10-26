@@ -1,0 +1,583 @@
+[
+  {
+    "name": "LlamaRPC",
+    "url": "https://eth.llamarpc.com",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "42.94s"
+  },
+  {
+    "name": "BlockPi",
+    "url": "https://ethereum.public.blockpi.network/v1/rpc/public",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "10.16s",
+    "registros": 80212
+  },
+  {
+    "name": "Tenderly",
+    "url": "https://gateway.tenderly.co/public/mainnet",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "10.59s",
+    "registros": 80212
+  },
+  {
+    "name": "BlastAPI",
+    "url": "https://eth-mainnet.public.blastapi.io",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "Nodies",
+    "url": "https://ethereum-public.nodies.app",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "7.85s",
+    "registros": 80212
+  },
+  {
+    "name": "1RPC",
+    "url": "https://1rpc.io/eth",
+    "lastBlock": 23654299,
+    "date": "2025-10-25T11:53:11.000Z",
+    "active": true
+  },
+  {
+    "name": "MEV Blocker",
+    "url": "https://rpc.mevblocker.io",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "7.33s",
+    "registros": 80212
+  },
+  {
+    "name": "PublicNode",
+    "url": "https://rpc.ankr.com/eth",
+    "active": false,
+    "error": "missing response for request (value=[ { \"error\": { \"code\": -32000, \"message\": \"Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.\" }, \"id\": null, \"jsonrpc\": \"2.0\" } ], info={ \"payload\": { \"id\": 2, \"jsonrpc\": \"2.0\", \"method\": \"eth_blockNumber\", \"params\": [  ] } }, code=BAD_DATA, version=6.15.0)"
+  },
+  {
+    "name": "PublicNode (WS)",
+    "url": "wss://rpc.ankr.com/eth",
+    "active": false,
+    "error": "WebSocket not supported"
+  },
+  {
+    "name": "dRPC",
+    "url": "https://eth.drpc.org",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "dRPC (WS)",
+    "url": "wss://eth.drpc.org",
+    "active": false,
+    "error": "WebSocket not supported"
+  },
+  {
+    "name": "Cloudflare",
+    "url": "https://cloudflare-eth.com",
+    "active": false,
+    "error": "could not coalesce error (error={ \"code\": -32046, \"message\": \"Cannot fulfill request\" }, payload={ \"id\": 2, \"jsonrpc\": \"2.0\", \"method\": \"eth_blockNumber\", \"params\": [  ] }, code=UNKNOWN_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "OmniaTech",
+    "url": "https://endpoints.omniatech.io/v1/eth/mainnet/public",
+    "active": false,
+    "error": "Timeout"
+  },
+  {
+    "name": "dRPC (WS)",
+    "url": "wss://eth.drpc.org",
+    "active": false,
+    "error": "WebSocket not supported"
+  },
+  {
+    "name": "0xRPC (WS)",
+    "url": "wss://0xrpc.io/eth",
+    "active": false,
+    "error": "unsupported protocol wss (info={ \"protocol\": \"wss\" }, operation=\"request\", code=UNSUPPORTED_OPERATION, version=6.15.0)",
+    "tested": true
+  },
+  {
+    "name": "Tenderly (WS)",
+    "url": "wss://mainnet.gateway.tenderly.co",
+    "active": false,
+    "error": "WebSocket not supported"
+  },
+  {
+    "name": "Flashbots",
+    "url": "https://rpc.flashbots.net",
+    "active": false,
+    "error": "server response 400 Bad Request (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://rpc.flashbots.net\", \"responseBody\": null, \"responseStatus\": \"400 Bad Request\" }, code=SERVER_ERROR, version=6.15.0)",
+    "tested": true
+  },
+  {
+    "name": "1RPC",
+    "url": "https://1rpc.io/eth",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "Ethereum PublicNode (WS)",
+    "url": "wss://ethereum-rpc.publicnode.com",
+    "active": false,
+    "error": "WebSocket not supported"
+  },
+  {
+    "name": "Tenderly MainNet",
+    "url": "https://mainnet.gateway.tenderly.co",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "Zan",
+    "url": "https://api.zan.top/eth-mainnet",
+    "active": false,
+    "error": "missing response for request (value=[ { \"error\": \"cu limit exceeded; The current RPC traffic is too high. Please visit https://zan.top/ and register to unlock more.\", \"path\": \"/eth-mainnet\", \"status\": 200, \"timestamp\": \"2025-10-25T11:53:36.806482899Z\" } ], info={ \"payload\": { \"id\": 2, \"jsonrpc\": \"2.0\", \"method\": \"eth_blockNumber\", \"params\": [  ] } }, code=BAD_DATA, version=6.15.0)"
+  },
+  {
+    "name": "Ethereum PublicNode",
+    "url": "https://ethereum-rpc.publicnode.com",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "BlastAPI",
+    "url": "https://eth-mainnet.public.blastapi.io",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "BLXRBDN",
+    "url": "https://eth.rpc.blxrbdn.com",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "RPCFast",
+    "url": "https://eth-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "dRPC",
+    "url": "https://eth.drpc.org",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "Grove",
+    "url": "https://eth.rpc.grove.city/v1/01fdb492",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true
+  },
+  {
+    "name": "Stakely",
+    "url": "https://ethereum-json-rpc.stakely.io",
+    "lastBlock": 23654301,
+    "active": true
+  },
+  {
+    "name": "NodeReal",
+    "url": "https://eth-mainnet.nodereal.io/v1/1659dfb40aa24bbb8153a677b98064d7",
+    "lastBlock": 23654300,
+    "date": "2025-10-25T11:53:23.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "9.89s",
+    "registros": 80212
+  },
+  {
+    "name": "Owlracle",
+    "url": "https://rpc.owlracle.info/eth/70d38ce1826c4a60bb2a8e05a6c8b20f",
+    "active": false,
+    "error": "server response 401 Unauthorized (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://rpc.owlracle.info/eth/70d38ce1826c4a60bb2a8e05a6c8b20f\", \"responseBody\": \"{\\\"error\\\":true,\\\"code\\\":401,\\\"message\\\":\\\"Origin mismatch\\\"}\", \"responseStatus\": \"401 Unauthorized\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "MEV Blocker",
+    "url": "https://rpc.mevblocker.io",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "Poolz Finance",
+    "url": "https://rpc.poolz.finance/eth",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "Nodies",
+    "url": "https://ethereum-public.nodies.app",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "GetBlock",
+    "url": "https://go.getblock.io/aefd01aa907c4805ba3c00a9e5b48c6b",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "17.22s"
+  },
+  {
+    "name": "MeowRPC",
+    "url": "https://eth.meowrpc.com",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "BlockPi",
+    "url": "https://ethereum.public.blockpi.network/v1/rpc/public",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "Blockrazor",
+    "url": "https://eth.blockrazor.xyz",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "MEV Blocker (Fast)",
+    "url": "https://rpc.mevblocker.io/fast",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "Tenderly Gateway",
+    "url": "https://gateway.tenderly.co/public/mainnet",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "0xRPC",
+    "url": "https://0xrpc.io/eth",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "Tatum Gateway",
+    "url": "https://ethereum-mainnet.gateway.tatum.io",
+    "active": false,
+    "error": "server response 402 Payment Required (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://ethereum-mainnet.gateway.tatum.io\", \"responseBody\": \"{\\\"statusCode\\\": 402, \\\"message\\\": \\\"Batch calls are available for paid plans only. To access this feature, please upgrade your subscription at https://co.tatum.io/upgrade.\\\"}\", \"responseStatus\": \"402 Payment Required\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "Lava",
+    "url": "https://eth1.lava.build",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "Gashawk",
+    "url": "https://core.gashawk.io/rpc",
+    "active": false,
+    "error": "server response 406 Not Acceptable (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://core.gashawk.io/rpc\", \"responseBody\": null, \"responseStatus\": \"406 Not Acceptable\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "Flashbots (Fast)",
+    "url": "https://rpc.flashbots.net/fast",
+    "active": false,
+    "error": "server response 400 Bad Request (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://rpc.flashbots.net/fast\", \"responseBody\": null, \"responseStatus\": \"400 Bad Request\" }, code=SERVER_ERROR, version=6.15.0)",
+    "tested": true
+  },
+  {
+    "name": "MEV Blocker (NoReverts)",
+    "url": "https://rpc.mevblocker.io/noreverts",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "MEV Blocker (FullPrivacy)",
+    "url": "https://rpc.mevblocker.io/fullprivacy",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "6.96s",
+    "registros": 80212
+  },
+  {
+    "name": "Merkle",
+    "url": "https://eth.merkle.io",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "TheRPC",
+    "url": "https://ethereum.therpc.io",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "Payload",
+    "url": "https://rpc.payload.de",
+    "active": false,
+    "error": "server response 400 Bad Request (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://rpc.payload.de\", \"responseBody\": \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"code\\\":-37000,\\\"message\\\":\\\"parse error: failed to parse request body into json rpc message: https://www.jsonrpc.org/specification#request_object\\\"}}\\n\", \"responseStatus\": \"400 Bad Request\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "GatewayFM",
+    "url": "https://rpc.eth.gateway.fm",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "OnFinality",
+    "url": "https://eth.api.onfinality.io/public",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "7.20s",
+    "registros": 80212
+  },
+  {
+    "name": "Alchemy Demo",
+    "url": "https://eth-mainnet.g.alchemy.com/v2/demo",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "NowNodes",
+    "url": "https://public-eth.nownodes.io",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true
+  },
+  {
+    "name": "SubQuery",
+    "url": "https://ethereum.rpc.subquery.network/public",
+    "lastBlock": 23654301,
+    "date": "2025-10-25T11:53:35.000Z",
+    "active": true,
+    "tested": true,
+    "executionTime": "27.54s"
+  },
+  {
+    "name": "Blocknative Boost",
+    "url": "https://rpc.blocknative.com/boost",
+    "active": false,
+    "error": "server response 400 Bad Request (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://rpc.blocknative.com/boost\", \"responseBody\": null, \"responseStatus\": \"400 Bad Request\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "MyCryptoAPI",
+    "url": "https://api.mycryptoapi.com/eth",
+    "active": false,
+    "error": "server response 403 Forbidden (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://api.mycryptoapi.com/eth\", \"responseBody\": \"{\\\"message\\\":\\\"Forbidden\\\"}\", \"responseStatus\": \"403 Forbidden\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "CallstaticRPC (WS)",
+    "url": "wss://ethereum.callstaticrpc.com",
+    "active": false,
+    "error": "WebSocket not supported"
+  },
+  {
+    "name": "GraffitiFarm (WS)",
+    "url": "wss://ws-rpc.graffiti.farm",
+    "active": false,
+    "error": "WebSocket not supported"
+  },
+  {
+    "name": "RadiumBlock WS",
+    "url": "https://rpc.public.curie.radiumblock.co/ws/ethereum",
+    "active": false,
+    "error": "server response 502 Bad Gateway (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://rpc.public.curie.radiumblock.co/ws/ethereum\", \"responseBody\": \"error code: 502\", \"responseStatus\": \"502 Bad Gateway\" }, code=SERVER_ERROR, version=6.15.0)",
+    "tested": true
+  },
+  {
+    "name": "4everland (WS)",
+    "url": "wss://eth-mainnet.4everland.org/ws/v1/37fa9972c1b1cd5fab542c7bdd4cde2f",
+    "active": false,
+    "error": "WebSocket not supported"
+  },
+  {
+    "name": "4everland",
+    "url": "https://eth-mainnet.4everland.org/v1/37fa9972c1b1cd5fab542c7bdd4cde2f",
+    "active": false,
+    "error": "Timeout"
+  },
+  {
+    "name": "RadiumBlock HTTP",
+    "url": "https://rpc.public.curie.radiumblock.co/http/ethereum",
+    "active": false,
+    "error": "server response 502 Bad Gateway (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://rpc.public.curie.radiumblock.co/http/ethereum\", \"responseBody\": \"error code: 502\", \"responseStatus\": \"502 Bad Gateway\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "GraffitiFarm",
+    "url": "https://rpc.graffiti.farm",
+    "active": false,
+    "error": "server response 404 Not Found (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://rpc.graffiti.farm\", \"responseBody\": \"404 page not found\\n\", \"responseStatus\": \"404 Not Found\" }, code=SERVER_ERROR, version=6.15.0)",
+    "tested": true
+  },
+  {
+    "name": "Nodifi",
+    "url": "https://rpc.nodifi.ai/api/rpc/free",
+    "active": false,
+    "error": "server response 404 Not Found (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://rpc.nodifi.ai/api/rpc/free\", \"responseBody\": \"<!DOCTYPE html>\\n<html lang=\\\"en\\\">\\n<head>\\n<meta charset=\\\"utf-8\\\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/rpc/free</pre>\\n</body>\\n</html>\\n\", \"responseStatus\": \"404 Not Found\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "StackUp",
+    "url": "https://public.stackup.sh/api/v1/node/ethereum-mainnet",
+    "active": false,
+    "error": "getaddrinfo ENOTFOUND public.stackup.sh"
+  },
+  {
+    "name": "Polysplit",
+    "url": "https://rpc.polysplit.cloud/v1/chain/1",
+    "active": false,
+    "error": "getaddrinfo ENOTFOUND rpc.polysplit.cloud"
+  },
+  {
+    "name": "Stateless",
+    "url": "https://api.stateless.solutions/ethereum/v1/demo",
+    "active": false,
+    "error": "Hostname/IP does not match certificate's altnames: Host: api.stateless.solutions. is not in the cert's altnames: DNS:monitoring-cadu-bio.odin-vision.com"
+  },
+  {
+    "name": "NodeConnect",
+    "url": "https://eth.nodeconnect.org",
+    "active": false,
+    "error": "getaddrinfo ENOTFOUND eth.nodeconnect.org",
+    "tested": true
+  },
+  {
+    "name": "TokenView",
+    "url": "https://services.tokenview.io/vipapi/nodeservice/eth?apikey=qVHq2o6jpaakcw3lRstl",
+    "active": false,
+    "error": "Timeout"
+  },
+  {
+    "name": "Lokibuilder",
+    "url": "https://rpc.lokibuilder.xyz/wallet",
+    "active": false,
+    "error": "getaddrinfo ENOTFOUND rpc.lokibuilder.xyz",
+    "tested": true
+  },
+  {
+    "name": "NotADegen",
+    "url": "https://rpc.notadegen.com/eth",
+    "active": false,
+    "error": "connect ECONNREFUSED 80.78.24.228:443"
+  },
+  {
+    "name": "DiamondSwap",
+    "url": "https://eth-mainnet.diamondswap.org/rpc",
+    "active": false,
+    "error": "getaddrinfo ENOTFOUND eth-mainnet.diamondswap.org",
+    "tested": true
+  },
+  {
+    "name": "Tenderly Virtual 1",
+    "url": "https://virtual.mainnet.rpc.tenderly.co/5804dcf7-70e6-4988-b2b0-3672193e0c91",
+    "active": false,
+    "error": "server response 403 Forbidden (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://virtual.mainnet.rpc.tenderly.co/5804dcf7-70e6-4988-b2b0-3672193e0c91\", \"responseBody\": \"{\\\"id\\\":3,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"code\\\":-32004,\\\"message\\\":\\\"You’ve reached the quota limit for your current plan. Upgrade your plan in the dashboard or contact support to continue.\\\"}}\", \"responseStatus\": \"403 Forbidden\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "Tenderly Virtual 2",
+    "url": "https://virtual.mainnet.rpc.tenderly.co/7355b215-ef17-4e3e-8f64-d494284ef18a",
+    "active": false,
+    "error": "server response 400 Bad Request (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://virtual.mainnet.rpc.tenderly.co/7355b215-ef17-4e3e-8f64-d494284ef18a\", \"responseBody\": \"{\\\"code\\\":-32006,\\\"message\\\":\\\"virtual testnet not found.\\\"}\", \"responseStatus\": \"400 Bad Request\" }, code=SERVER_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "LinkPool",
+    "url": "https://main-light.eth.linkpool.io",
+    "active": false,
+    "error": "self-signed certificate; if the root CA is installed locally, try running Node.js with --use-system-ca"
+  },
+  {
+    "name": "NodeLight",
+    "url": "https://ethereumnodelight.app.runonflux.io",
+    "active": false,
+    "error": "server response 503 Service Unavailable (request={  }, response={  }, error=null, info={ \"requestUrl\": \"https://ethereumnodelight.app.runonflux.io\", \"responseBody\": \"<html>\\r\\n    <head>\\r\\n        <title>Error 503 FDM-FR-1-1</title>\\r\\n        <link rel=\\\"shortcut icon\\\" type=\\\"image/x-icon\\\" href=\\\"https://github.com/RunOnFlux/Flux_503/raw/main/favicon.ico\\\" />\\r\\n        <link rel=\\\"stylesheet\\\" href=\\\"https://fonts.cdnfonts.com/css/heart-warming-extra\\\" />\\r\\n        <link rel=\\\"stylesheet\\\" href=\\\"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700;800&display=swap\\\" />\\r\\n    </head>\\r\\n    <style>\\r\\n        body {\\r\\n            background: rgba(22, 26, 35, 1);\\r\\n            height: 100vh;\\r\\n            margin: 0px;\\r\\n        }\\r\\n        .img {\\r\\n            background-image: url(\\\"https://raw.githubusercontent.com/RunOnFlux/Flux_503/main/team-working.svg\\\");\\r\\n            width: 95%;\\r\\n            height: 100%;\\r\\n            background-size: 45vmax;\\r\\n            background-position: right bottom;\\r\\n            background-repeat: no-repeat;\\r\\n            position: static;\\r\\n        }\\r\\n        .logo {\\r\\n            width: 95%;\\r\\n            height: 90%;\\r\\n            position: absolute;\\r\\n            background-image: url(\\\"https://raw.githubusercontent.com/RunOnFlux/Flux_503/main/flux-logo.svg\\\");\\r\\n            top: 10%;\\r\\n            left: 5%;\\r\\n            background-repeat: no-repeat;\\r\\n            background-size: 10vmax;\\r\\n        }\\r\\n        .HEY {\\r\\n            width: 80%;\\r\\n            padding-left: 10%;\\r\\n            height: 90%;\\r\\n            position: absolute;\\r\\n            top: 10px;\\r\\n            margin: 0;\\r\\n            text-align: center;\\r\\n        }\\r\\n        .HEY h1 {\\r\\n            font-family: Heart Warming;\\r\\n            color: rgba(154, 209, 255, 1);\\r\\n            font-size: 7vmax;\\r\\n            margin-bottom: 2%;\\r\\n        }\\r\\n        .HEY h2 {\\r\\n            margin-top: 0;\\r\\n            font-family: Montserrat;\\r\\n            color: white;\\r\\n            font-size: 4vmax;\\r\\n            margin-bottom: 0;\\r\\n        }\\r\\n        .HEY h2 span {\\r\\n            color: rgba(154, 209, 255, 1);\\r\\n        }\\r\\n        .HEY p {\\r\\n            font-family: Montserrat;\\r\\n            color: rgba(190, 200, 213, 1);\\r\\n        }\\r\\n        .btnTrans {\\r\\n            border-radius: 70px;\\r\\n            font-family: Montserrat;\\r\\n            font-style: normal;\\r\\n            font-size: 1.1vmax;\\r\\n            text-decoration: none;\\r\\n            background: rgba(154, 209, 255, 1);\\r\\n            align-items: center;\\r\\n            text-align: center;\\r\\n            color: rgba(22, 26, 35, 1);\\r\\n            width: 20%;\\r\\n            padding-top: 15px;\\r\\n            margin: 0 auto;\\r\\n            padding-bottom: 15px;\\r\\n            font-weight: bold;\\r\\n            margin-bottom: 5%;\\r\\n        }\\r\\n        .HEY h5 {\\r\\n            color: rgba(190, 200, 213, 1);\\r\\n            font-family: Montserrat;\\r\\n        }\\r\\n        .parent {\\r\\n            width: 40%;\\r\\n            margin: 0 auto;\\r\\n            display: grid;\\r\\n            grid-template-columns: repeat(5, 1fr);\\r\\n            grid-template-rows: 1fr;\\r\\n            grid-column-gap: 0px;\\r\\n            grid-row-gap: 0px;\\r\\n        }\\r\\n        .div1 {\\r\\n            grid-area: 1 / 1 / 2 / 2;\\r\\n        }\\r\\n        .div2 {\\r\\n            grid-area: 1 / 2 / 2 / 3;\\r\\n        }\\r\\n        .div3 {\\r\\n            grid-area: 1 / 3 / 2 / 4;\\r\\n        }\\r\\n        .div4 {\\r\\n            grid-area: 1 / 4 / 2 / 5;\\r\\n        }\\r\\n        .div5 {\\r\\n            grid-area: 1 / 5 / 2 / 6;\\r\\n        }\\r\\n        @media screen and (max-width: 1000px) {\\r\\n            .HEY p {\\r\\n                font-size: 50px !important;\\r\\n            }\\r\\n            .HEY h1 {\\r\\n                font-size: 250px !important;\\r\\n            }\\r\\n            .HEY h5 {\\r\\n                font-size: 35px !important;\\r\\n                font-weight: lighter;\\r\\n            }\\r\\n            .parent {\\r\\n                width: 100%;\\r\\n            }\\r\\n            img {\\r\\n                width: 100px;\\r\\n            }\\r\\n            .btnTrans {\\r\\n                font-size: 30px !important;\\r\\n                width: 50%;\\r\\n            }\\r\\n            .logo {\\r\\n                top: 4%;\\r\\n                background-size: 15vmax;\\r\\n            }\\r\\n        }\\r\\n    </style>\\r\\n    <body>\\r\\n        <div class=\\\"img\\\"></div>\\r\\n        <div class=\\\"logo\\\"></div>\\r\\n        <div class=\\\"HEY\\\">\\r\\n            <h1>\\r\\n                Hey!\\r\\n            </h1>\\r\\n            <h2>Deployment in process, decentralizing your app... <span>Stand by!</span></h2>\\r\\n            <p>\\r\\n                Your application is currently being propagated across the Flux Cloud. A FluxNode should pick it up in the next 5 to 10 minutes.\\r\\n            </p>\\r\\n            <p>\\r\\n                Many applications, such as nodes or gaming servers do not have web interface and so can't be accessed via browser. This error message is thus normal and the application works properly.\\r\\n            </p>\\r\\n            <p>\\r\\n                Application might also not be present on the Flux network. It was not registered, expired or is wrongly configured.\\r\\n            </p>\\r\\n            <a href=\\\"https://runonflux.io\\\" style=\\\"text-decoration: none;\\\">\\r\\n                <div class=\\\"btnTrans\\\">\\r\\n                    Back to Home\\r\\n                </div>\\r\\n            </a>\\r\\n            <h5>In the meantime, you can follow us on our social networks for updates and news about our services.</h5>\\r\\n            <div class=\\\"parent\\\">\\r\\n                <div class=\\\"div1\\\">\\r\\n                    <a href=\\\"https://www.instagram.com/runonflux_official/\\\"><img src=\\\"https://raw.githubusercontent.com/RunOnFlux/Flux_503/main/socials-instagram.svg\\\" /></a>\\r\\n                </div>\\r\\n                <div class=\\\"div2\\\">\\r\\n                    <a href=\\\"https://twitter.com/RunOnFlux\\\"><img src=\\\"https://raw.githubusercontent.com/RunOnFlux/Flux_503/main/socials-twitter.svg\\\" /></a>\\r\\n                </div>\\r\\n                <div class=\\\"div3\\\">\\r\\n                    <a href=\\\"https://www.facebook.com/runonflux\\\"><img src=\\\"https://raw.githubusercontent.com/RunOnFlux/Flux_503/main/socials-facebook.svg\\\" /></a>\\r\\n                </div>\\r\\n                <div class=\\\"div4\\\">\\r\\n                    <a href=\\\"https://www.youtube.com/channel/UCphbdfb1MXYgUPsdhQPcnGw\\\"><img src=\\\"https://raw.githubusercontent.com/RunOnFlux/Flux_503/main/socials-youtube.svg\\\" /></a>\\r\\n                </div>\\r\\n                <div class=\\\"div5\\\">\\r\\n                    <a href=\\\"https://www.linkedin.com/company/flux-official/mycompany/\\\"><img src=\\\"https://raw.githubusercontent.com/RunOnFlux/Flux_503/main/socials-linkedin.svg\\\" /></a>\\r\\n                </div>\\r\\n            </div>\\r\\n        </div>\\r\\n    </body>\\r\\n</html>\\r\\n\", \"responseStatus\": \"503 Service Unavailable\" }, code=SERVER_ERROR, version=6.15.0)",
+    "tested": true
+  },
+  {
+    "name": "Zmok",
+    "url": "https://api.zmok.io/mainnet/oaen6dy8ff6hju9k",
+    "active": false,
+    "error": "Hostname/IP does not match certificate's altnames: Host: api.zmok.io. is not in the cert's altnames: DNS:www.mansbestcat.com, DNS:www.armorskirmish.diy, DNS:www.duskminer.com"
+  },
+  {
+    "name": "Unifra",
+    "url": "https://eth-mainnet-public.unifra.io",
+    "active": false,
+    "error": "getaddrinfo ENOTFOUND eth-mainnet-public.unifra.io"
+  },
+  {
+    "name": "Bitstack",
+    "url": "https://openapi.bitstack.com/v1/wNFxbiJyQsSeLrX8RRCHi7NpRxrlErZk/DjShIqLishPCTB9HiMkPHXjUM9CNM9Na/ETH/mainnet",
+    "lastBlock": 23654302,
+    "date": "2025-10-25T11:53:47.000Z",
+    "active": true
+  },
+  {
+    "name": "Cloudflare",
+    "url": "https://cloudflare-eth.com",
+    "active": false,
+    "error": "could not coalesce error (error={ \"code\": -32046, \"message\": \"Cannot fulfill request\" }, payload={ \"id\": 2, \"jsonrpc\": \"2.0\", \"method\": \"eth_blockNumber\", \"params\": [  ] }, code=UNKNOWN_ERROR, version=6.15.0)"
+  },
+  {
+    "name": "BLXRBDN Singapore",
+    "url": "https://singapore.rpc.blxrbdn.com",
+    "lastBlock": 23654302,
+    "date": "2025-10-25T11:53:47.000Z",
+    "active": true
+  },
+  {
+    "name": "BLXRBDN UK",
+    "url": "https://uk.rpc.blxrbdn.com",
+    "lastBlock": 23654302,
+    "date": "2025-10-25T11:53:47.000Z",
+    "active": true
+  },
+  {
+    "name": "BLXRBDN Virginia",
+    "url": "https://virginia.rpc.blxrbdn.com",
+    "lastBlock": 23654302,
+    "date": "2025-10-25T11:53:47.000Z",
+    "active": true
+  },
+  {
+    "name": "Builder0x69",
+    "url": "https://rpc.builder0x69.io",
+    "active": false,
+    "error": "getaddrinfo ENOTFOUND rpc.builder0x69.io"
+  }
+]
