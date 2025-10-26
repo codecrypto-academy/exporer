@@ -91,8 +91,8 @@ graph TB
 
     %% Relaciones APIs -> Base de Datos
     API_METRICS -->|SELECT| T_SYSTEM
-    API_METRICS -->|SELECT SUM()| T_CONSUMER
-    API_RPCS -->|SELECT/UPDATE| T_RPCS
+    API_METRICS -->|SELECT SUM| T_CONSUMER
+    API_RPCS -->|SELECT UPDATE| T_RPCS
     API_CONSUMERS -->|SELECT| T_CONSUMER
     API_EVENTS -->|SELECT| T_EVENTS
 
@@ -160,11 +160,11 @@ graph TB
     SVC_RPC_POOL -->|Asigna exclusivo| RPC5
 
     %% Relaciones Blockchain Service -> RPCs
-    SVC_BLOCKCHAIN -->|getLogs()<br/>getBlock()| RPC1
-    SVC_BLOCKCHAIN -->|getLogs()<br/>getBlock()| RPC2
-    SVC_BLOCKCHAIN -->|getLogs()<br/>getBlock()| RPC3
-    SVC_BLOCKCHAIN -->|getLogs()<br/>getBlock()| RPC4
-    SVC_BLOCKCHAIN -->|getLogs()<br/>getBlock()| RPC5
+    SVC_BLOCKCHAIN -->|getLogs getBlock| RPC1
+    SVC_BLOCKCHAIN -->|getLogs getBlock| RPC2
+    SVC_BLOCKCHAIN -->|getLogs getBlock| RPC3
+    SVC_BLOCKCHAIN -->|getLogs getBlock| RPC4
+    SVC_BLOCKCHAIN -->|getLogs getBlock| RPC5
 
     %% Relaciones RPCs -> Ethereum
     RPC1 -->|JSON-RPC| ETHEREUM
@@ -174,7 +174,7 @@ graph TB
     RPC5 -->|JSON-RPC| ETHEREUM
 
     %% Relaciones Decoder -> 4byte
-    SVC_DECODER -->|GET /api/v1/event-signatures| FOURBYTE
+    SVC_DECODER -->|GET event-signatures| FOURBYTE
 
     %% Relaciones Docker
     DOCKER_PG -.->|Contiene| DB
