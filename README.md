@@ -1,3 +1,10 @@
+> ⚠️ **ESTADO DEL PROYECTO:**  
+> <span style="color:orange"><b>BORRADOR - EN DESARROLLO, NO DEFINITIVO</b></span>
+
+---
+
+
+
 # Sistema de Procesamiento de Bloques de Ethereum
 
 ## Descripción General
@@ -13,7 +20,7 @@ Sistema distribuido para el procesamiento masivo y análisis de bloques de Ether
 - **Cola de reintentos**: Los mensajes fallidos se reenvían automáticamente
 
 ### 2. Pool de RPCs Dinámico
-- **Configuración**: Base de datos postgresql con URLs de endpoints RPC de Ethereum que obtenemos de logs-eth/rpcs.json. Las migraciones de la base de datos se haran con flyway.
+- **Configuración**: Base de datos postgresql con URLs de endpoints RPC de Ethereum que obtenemos de logs-eth/rpcs.json. Las migraciones de la base de datos se haran con flyway.1
 
 ```json
    
