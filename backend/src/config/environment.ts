@@ -15,13 +15,17 @@ export const config = {
     connectionString: process.env.POSTGRES_CONNECTION,
   },
 
-  // RabbitMQ
-  rabbitmq: {
-    url: process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost:5672',
+  // ActiveMQ
+  activemq: {
+    url: process.env.ACTIVEMQ_URL || 'ws://localhost:61614',
+    host: process.env.ACTIVEMQ_HOST || 'localhost',
+    port: parseInt(process.env.ACTIVEMQ_PORT || '61614', 10),
+    username: process.env.ACTIVEMQ_USERNAME || 'guest',
+    password: process.env.ACTIVEMQ_PASSWORD || 'guest',
     queues: {
-      blocks: 'ethereum_blocks_queue',
-      retries: 'ethereum_blocks_retry_queue',
-      deadLetter: 'ethereum_blocks_dead_letter_queue',
+      blocks: 'ethereum.blocks.queue',
+      retries: 'ethereum.blocks.retry.queue',
+      deadLetter: 'ethereum.blocks.deadletter.queue',
     },
   },
 
@@ -56,7 +60,7 @@ export function validateConfig(): void {
     'POSTGRES_USER',
     'POSTGRES_PASSWORD',
     'POSTGRES_DB',
-    'RABBITMQ_URL',
+    'ACTIVEMQ_URL',
   ];
 
   const missing = requiredVars.filter(

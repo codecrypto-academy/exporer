@@ -27,13 +27,13 @@ graph TB
         end
     end
 
-    subgraph "🔄 CAPA DE MENSAJERÍA - RabbitMQ"
-        RABBIT[RabbitMQ<br/>:5672]
+    subgraph "🔄 CAPA DE MENSAJERÍA - ActiveMQ"
+        ACTIVEMQ[ActiveMQ Artemis<br/>:61616]
 
         subgraph "📬 Colas"
-            Q_MAIN[Cola Principal<br/>ethereum_blocks_queue]
-            Q_RETRY[Cola Reintentos<br/>+ TTL 5s]
-            Q_DEAD[Dead Letter Queue<br/>Mensajes fallidos]
+            Q_MAIN[Cola Principal<br/>ethereum.blocks.queue]
+            Q_RETRY[Cola Reintentos<br/>ethereum.blocks.retry.queue]
+            Q_DEAD[Dead Letter Queue<br/>ethereum.blocks.deadletter.queue]
         end
     end
 
@@ -76,7 +76,7 @@ graph TB
 
     subgraph "🐳 INFRAESTRUCTURA - Docker"
         DOCKER_PG[Container PostgreSQL]
-        DOCKER_RABBIT[Container RabbitMQ]
+        DOCKER_ACTIVEMQ[Container ActiveMQ Artemis]
         DOCKER_FLYWAY[Container Flyway<br/>Migraciones]
     end
 
@@ -102,18 +102,18 @@ graph TB
     DB --> T_CONSUMER
     DB --> T_SYSTEM
 
-    %% Relaciones Productor -> RabbitMQ
+    %% Relaciones Productor -> ActiveMQ
     PRODUCER -->|Publica mensajes<br/>rangos bloques| Q_MAIN
 
-    %% Relaciones RabbitMQ
-    RABBIT --> Q_MAIN
-    RABBIT --> Q_RETRY
-    RABBIT --> Q_DEAD
+    %% Relaciones ActiveMQ
+    ACTIVEMQ --> Q_MAIN
+    ACTIVEMQ --> Q_RETRY
+    ACTIVEMQ --> Q_DEAD
     Q_MAIN -->|En caso de error| Q_RETRY
     Q_RETRY -->|Después de TTL| Q_MAIN
     Q_MAIN -->|Fallos repetidos| Q_DEAD
 
-    %% Relaciones Consumers -> RabbitMQ
+    %% Relaciones Consumers -> ActiveMQ
     Q_MAIN -->|Consume mensajes| C1
     Q_MAIN -->|Consume mensajes| C2
     Q_MAIN -->|Consume mensajes| C3
@@ -178,7 +178,7 @@ graph TB
 
     %% Relaciones Docker
     DOCKER_PG -.->|Contiene| DB
-    DOCKER_RABBIT -.->|Contiene| RABBIT
+    DOCKER_ACTIVEMQ -.->|Contiene| ACTIVEMQ
     DOCKER_FLYWAY -.->|Ejecuta migraciones| DB
 
     %% Estilos
@@ -194,11 +194,11 @@ graph TB
     class WEB,BROWSER webStyle
     class API_METRICS,API_RPCS,API_CONSUMERS,API_EVENTS apiStyle
     class DB,T_RPCS,T_EVENTS,T_CONSUMER,T_SYSTEM dbStyle
-    class RABBIT,Q_MAIN,Q_RETRY,Q_DEAD queueStyle
+    class ACTIVEMQ,Q_MAIN,Q_RETRY,Q_DEAD queueStyle
     class C1,C2,C3,C4,C5,PRODUCER workerStyle
     class SVC_BLOCKCHAIN,SVC_DECODER,SVC_RPC_POOL,SVC_METRICS serviceStyle
     class RPC1,RPC2,RPC3,RPC4,RPC5,RPC_MORE,FOURBYTE,ETHEREUM externalStyle
-    class DOCKER_PG,DOCKER_RABBIT,DOCKER_FLYWAY dockerStyle
+    class DOCKER_PG,DOCKER_ACTIVEMQ,DOCKER_FLYWAY dockerStyle
 ```
 
 ---
@@ -215,9 +215,9 @@ Usuario → Panel Web → API REST → PostgreSQL → Respuesta JSON → Renderi
 ```
 1. Productor
    └─> Genera mensaje: {startBlock: 18000000, endBlock: 18000100}
-   └─> Publica en RabbitMQ (Cola Principal)
+   └─> Publica en ActiveMQ (Cola Principal)
 
-2. RabbitMQ
+2. ActiveMQ
    └─> Distribuye mensaje a Consumer disponible
 
 3. Consumer (Worker)
@@ -273,7 +273,7 @@ Usuario → Panel Web → PATCH /api/rpcs
 ┌─────────────────────────────────────────────────────────────┐
 │                ⚙️ Backend (TypeScript)                      │
 │                                                              │
-│  📤 Productor ──────▶ 🔄 RabbitMQ Queues                   │
+│  📤 Productor ──────▶ 🔄 ActiveMQ Queues                   │
 │                           │                                  │
 │                           ├─▶ 👷 Consumer 1 ← RPC 1        │
 │                           ├─▶ 👷 Consumer 2 ← RPC 2        │
@@ -325,12 +325,12 @@ Usuario → Panel Web → PATCH /api/rpcs
 | **consumer_metrics** | Métricas por cada ejecución de worker |
 | **system_metrics** | Métricas globales agregadas |
 
-### RabbitMQ
+### ActiveMQ
 | Cola | Propósito |
 |------|-----------|
-| **ethereum_blocks_queue** | Cola principal de trabajo |
-| **retry_queue** | Reintentos automáticos (TTL 5s) |
-| **dead_letter_queue** | Mensajes que fallaron múltiples veces |
+| **ethereum.blocks.queue** | Cola principal de trabajo |
+| **ethereum.blocks.retry.queue** | Reintentos automáticos (TTL 5s) |
+| **ethereum.blocks.deadletter.queue** | Mensajes que fallaron múltiples veces |
 
 ---
 
@@ -339,15 +339,15 @@ Usuario → Panel Web → PATCH /api/rpcs
 ### Protocolos
 - **HTTP/REST**: Panel Web ↔ API Routes
 - **PostgreSQL Wire Protocol**: APIs ↔ PostgreSQL
-- **AMQP**: Backend ↔ RabbitMQ
+- **STOMP**: Backend ↔ ActiveMQ
 - **JSON-RPC**: Ethers.js ↔ RPCs Ethereum
 - **HTTPS**: Event Decoder ↔ 4byte.directory
 
 ### Puertos
 - `3000`: Panel Web (Next.js)
 - `5432`: PostgreSQL
-- `5672`: RabbitMQ (AMQP)
-- `15672`: RabbitMQ Management UI
+- `61616`: ActiveMQ (OpenWire)
+- `8161`: ActiveMQ Web Console
 
 ---
 
@@ -412,7 +412,7 @@ Usuario → Panel Web → PATCH /api/rpcs
 ```
 1. [Productor] Genera mensaje
    ↓
-2. [RabbitMQ] Almacena en cola
+2. [ActiveMQ] Almacena en cola
    ↓
 3. [Consumer] Consume mensaje
    ↓
@@ -428,7 +428,7 @@ Usuario → Panel Web → PATCH /api/rpcs
    ↓
 9. [RPC Pool] Libera RPC
    ↓
-10. [RabbitMQ] ACK mensaje (completado)
+10. [ActiveMQ] ACK mensaje (completado)
 ```
 
 ---

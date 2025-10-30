@@ -24,24 +24,25 @@ services:
       retries: 5
     restart: unless-stopped
 
-  # RabbitMQ Message Queue
-  rabbitmq:
-    image: rabbitmq:3.12-management-alpine
+  # ActiveMQ Message Queue
+  activemq:
+    image: apache/activemq-artemis:2.31-alpine
     container_name: ethereum-processor-queue
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-      RABBITMQ_DEFAULT_VHOST: /
+      ARTEMIS_USERNAME: admin
+      ARTEMIS_PASSWORD: admin
+      ARTEMIS_MQ_USERNAME: guest
+      ARTEMIS_MQ_PASSWORD: guest
     ports:
-      - "5672:5672"   # AMQP protocol
-      - "15672:15672" # Management UI
+      - "61616:61616" # OpenWire protocol
+      - "8161:8161"   # Web Console
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-      - rabbitmq_logs:/var/log/rabbitmq
+      - activemq_data:/var/lib/artemis-instance
+      - activemq_logs:/var/log/artemis
     networks:
       - ethereum-network
     healthcheck:
-      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8161/console || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -74,7 +75,7 @@ networks:
 volumes:
   postgres_data:
     driver: local
-  rabbitmq_data:
+  activemq_data:
     driver: local
-  rabbitmq_logs:
+  activemq_logs:
     driver: local

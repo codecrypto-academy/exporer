@@ -1,4 +1,4 @@
-import { rabbitmq } from '../config/rabbitmq';
+import { activemq } from '../config/activemq';
 import { config } from '../config/environment';
 import { logger } from '../utils/logger';
 
@@ -18,8 +18,8 @@ export class BlockProducer {
     try {
       logger.info('🚀 Iniciando productor de bloques...');
 
-      // Conectar a RabbitMQ
-      await rabbitmq.connect();
+      // Conectar a ActiveMQ
+      await activemq.connect();
 
       const { startBlock, endBlock, blocksPerMessage } = config.ethereum;
 
@@ -54,7 +54,7 @@ export class BlockProducer {
         };
 
         // Enviar mensaje a la cola
-        await rabbitmq.publish(config.rabbitmq.queues.blocks, message);
+        await activemq.publish(config.activemq.queues.blocks, message);
 
         messagesSent++;
         currentBlock = rangeEnd + 1;
@@ -74,8 +74,8 @@ export class BlockProducer {
       );
 
       // Verificar cola
-      const queueCount = await rabbitmq.getQueueMessageCount(
-        config.rabbitmq.queues.blocks
+      const queueCount = await activemq.getQueueMessageCount(
+        config.activemq.queues.blocks
       );
       logger.info(`📬 Mensajes en cola: ${queueCount.toLocaleString()}`);
 
@@ -102,7 +102,7 @@ export class BlockProducer {
       retryCount: 0,
     };
 
-    await rabbitmq.publish(config.rabbitmq.queues.blocks, message);
+    await activemq.publish(config.activemq.queues.blocks, message);
     logger.info(`📤 Mensaje enviado: bloques ${startBlock} - ${endBlock}`);
   }
 
@@ -115,10 +115,10 @@ export class BlockProducer {
     deadLetterQueue: number;
   }> {
     return {
-      blocksQueue: await rabbitmq.getQueueMessageCount(config.rabbitmq.queues.blocks),
-      retriesQueue: await rabbitmq.getQueueMessageCount(config.rabbitmq.queues.retries),
-      deadLetterQueue: await rabbitmq.getQueueMessageCount(
-        config.rabbitmq.queues.deadLetter
+      blocksQueue: await activemq.getQueueMessageCount(config.activemq.queues.blocks),
+      retriesQueue: await activemq.getQueueMessageCount(config.activemq.queues.retries),
+      deadLetterQueue: await activemq.getQueueMessageCount(
+        config.activemq.queues.deadLetter
       ),
     };
   }

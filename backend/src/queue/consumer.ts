@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { rabbitmq } from '../config/rabbitmq';
+import { activemq } from '../config/activemq';
 import { database } from '../config/database';
 import { RPC } from '../database/models/RPC';
 import { Event, EventData } from '../database/models/Event';
@@ -29,15 +29,15 @@ export class BlockConsumer {
     try {
       logger.info(`🚀 Iniciando consumidor: ${this.consumerId}`);
 
-      // Conectar a base de datos y RabbitMQ
+      // Conectar a base de datos y ActiveMQ
       await database.connect();
-      await rabbitmq.connect();
+      await activemq.connect();
 
       this.isRunning = true;
 
       // Comenzar a consumir mensajes
-      await rabbitmq.consume(
-        config.rabbitmq.queues.blocks,
+      await activemq.consume(
+        config.activemq.queues.blocks,
         this.processMessage.bind(this)
       );
 
@@ -241,7 +241,7 @@ export class BlockConsumer {
       await this.blockchainService.destroy();
     }
 
-    await rabbitmq.disconnect();
+    await activemq.disconnect();
     await database.disconnect();
 
     logger.info(`👋 Consumidor ${this.consumerId} detenido`);
