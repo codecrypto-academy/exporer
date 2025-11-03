@@ -19,6 +19,8 @@
     "events:update": "ts-node src/scripts/update-events-from-cache.ts update",
     "events:missing": "ts-node src/scripts/update-events-from-cache.ts missing",
     "events:update-specific": "ts-node src/scripts/update-events-from-cache.ts specific",
+    "queue:requeue-dlq": "ts-node src/scripts/requeue-dlq-messages.ts",
+    "rpcs:check": "ts-node src/scripts/check-rpc-locks.ts",
     "migrate": "echo 'Use docker-compose run flyway migrate'",
     "test": "jest",
     "lint": "eslint src --ext .ts",

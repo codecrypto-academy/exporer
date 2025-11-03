@@ -22,7 +22,9 @@ export class BlockProducer {
       await rabbitmq.connect();
 
       const { startBlock, endBlock, blocksPerMessage } = config.ethereum;
-
+      console.log('startBlock', startBlock);
+      console.log('endBlock', endBlock);
+      console.log('blocksPerMessage', blocksPerMessage);
       if (startBlock >= endBlock) {
         throw new Error(
           `Rango de bloques inválido: start=${startBlock}, end=${endBlock}`

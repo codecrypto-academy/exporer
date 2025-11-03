@@ -10,11 +10,11 @@ async function main() {
   logger.info('═══════════════════════════════════════════════════\n');
 
   const producer = new BlockProducer();
-
+ 
   try {
     await producer.produceBlockRanges();
 
-    // Mostrar estadísticas finales
+    // Mostrar estadísticas final
     const stats = await producer.getQueueStats();
     logger.info('\n📊 ESTADÍSTICAS DE COLAS:');
     logger.info(`   Cola principal: ${stats.blocksQueue.toLocaleString()} mensajes`);

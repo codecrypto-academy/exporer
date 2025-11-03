@@ -27,8 +27,8 @@ export const config = {
 
   // Ethereum
   ethereum: {
-    startBlock: parseInt(process.env.ETHEREUM_START_BLOCK || '18000000', 10),
-    endBlock: parseInt(process.env.ETHEREUM_END_BLOCK || '18000100', 10),
+    startBlock: parseInt(process.env.ETHEREUM_START_BLOCK || '19000000', 10),
+    endBlock: parseInt(process.env.ETHEREUM_END_BLOCK || '21000000', 10),
     blocksPerMessage: parseInt(process.env.BLOCKS_PER_MESSAGE || '10', 10),
   },
 
