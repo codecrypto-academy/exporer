@@ -9,7 +9,16 @@
     "start": "node dist/index.js",
     "start:producer": "ts-node src/scripts/start-producer.ts",
     "start:consumer": "ts-node src/scripts/start-consumer.ts",
+    "trace:consumer": "ts-node src/scripts/trace-consumer.ts",
     "load-rpcs": "ts-node src/scripts/load-rpcs.ts",
+    "check-config": "ts-node src/scripts/check-config.ts",
+    "cache:stats": "ts-node src/scripts/manage-signature-cache.ts stats",
+    "cache:cleanup": "ts-node src/scripts/manage-signature-cache.ts cleanup",
+    "cache:export": "ts-node src/scripts/manage-signature-cache.ts export",
+    "cache:truncate": "ts-node src/scripts/manage-signature-cache.ts truncate",
+    "events:update": "ts-node src/scripts/update-events-from-cache.ts update",
+    "events:missing": "ts-node src/scripts/update-events-from-cache.ts missing",
+    "events:update-specific": "ts-node src/scripts/update-events-from-cache.ts specific",
     "migrate": "echo 'Use docker-compose run flyway migrate'",
     "test": "jest",
     "lint": "eslint src --ext .ts",
@@ -18,7 +27,7 @@
   "keywords": [
     "ethereum",
     "blockchain",
-    "activemq",
+    "rabbitmq",
     "postgresql",
     "distributed-system"
   ],
@@ -27,7 +36,7 @@
   "dependencies": {
     "ethers": "^6.15.0",
     "pg": "^8.11.3",
-    "stompjs": "^2.3.3",
+    "amqplib": "^0.10.3",
     "dotenv": "^16.3.1",
     "axios": "^1.6.2",
     "winston": "^3.11.0",
@@ -35,7 +44,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
-    "@types/stompjs": "^2.3.4",
+    "@types/amqplib": "^0.10.4",
     "@types/pg": "^8.10.9",
     "@types/uuid": "^9.0.7",
     "typescript": "^5.3.3",

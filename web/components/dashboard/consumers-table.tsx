@@ -68,7 +68,7 @@ export function ConsumersTable({ consumers }: ConsumersTableProps) {
                     {getStatusBadge(consumer.status)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-zinc-100">
-                    {consumer.blocks_processed.toLocaleString()}
+                    {consumer.blocks_processed ? consumer.blocks_processed.toLocaleString() : '0'}
                     {consumer.start_block && consumer.end_block && (
                       <span className="text-xs text-zinc-500 dark:text-zinc-400 ml-1">
                         ({consumer.start_block}-{consumer.end_block})
@@ -76,13 +76,17 @@ export function ConsumersTable({ consumers }: ConsumersTableProps) {
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-zinc-100">
-                    {consumer.events_extracted.toLocaleString()}
+                    {consumer.events_extracted ? consumer.events_extracted.toLocaleString() : '0'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-zinc-100">
-                    {consumer.blocks_per_second ? `${consumer.blocks_per_second.toFixed(2)} b/s` : '-'}
+                    {consumer.blocks_per_second && typeof consumer.blocks_per_second === 'number' 
+                      ? `${consumer.blocks_per_second.toFixed(2)} b/s` 
+                      : consumer.blocks_per_second || '-'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900 dark:text-zinc-100">
-                    {consumer.execution_time_ms ? `${(consumer.execution_time_ms / 1000).toFixed(1)}s` : '-'}
+                    {consumer.execution_time_ms && typeof consumer.execution_time_ms === 'number'
+                      ? `${(consumer.execution_time_ms / 1000).toFixed(1)}s` 
+                      : consumer.execution_time_ms || '-'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
                     {formatDistanceToNow(new Date(consumer.started_at), { addSuffix: true })}

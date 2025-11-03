@@ -15,25 +15,21 @@ export const config = {
     connectionString: process.env.POSTGRES_CONNECTION,
   },
 
-  // ActiveMQ
-  activemq: {
-    url: process.env.ACTIVEMQ_URL || 'ws://localhost:61614',
-    host: process.env.ACTIVEMQ_HOST || 'localhost',
-    port: parseInt(process.env.ACTIVEMQ_PORT || '61614', 10),
-    username: process.env.ACTIVEMQ_USERNAME || 'guest',
-    password: process.env.ACTIVEMQ_PASSWORD || 'guest',
+  // RabbitMQ
+  rabbitmq: {
+    url: process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost:5672',
     queues: {
-      blocks: 'ethereum.blocks.queue',
-      retries: 'ethereum.blocks.retry.queue',
-      deadLetter: 'ethereum.blocks.deadletter.queue',
+      blocks: 'ethereum_blocks_queue',
+      retries: 'ethereum_blocks_retry_queue',
+      deadLetter: 'ethereum_blocks_dead_letter_queue',
     },
   },
 
   // Ethereum
   ethereum: {
     startBlock: parseInt(process.env.ETHEREUM_START_BLOCK || '18000000', 10),
-    endBlock: parseInt(process.env.ETHEREUM_END_BLOCK || '18001000', 10),
-    blocksPerMessage: parseInt(process.env.BLOCKS_PER_MESSAGE || '100', 10),
+    endBlock: parseInt(process.env.ETHEREUM_END_BLOCK || '18000100', 10),
+    blocksPerMessage: parseInt(process.env.BLOCKS_PER_MESSAGE || '10', 10),
   },
 
   // Workers
@@ -60,7 +56,7 @@ export function validateConfig(): void {
     'POSTGRES_USER',
     'POSTGRES_PASSWORD',
     'POSTGRES_DB',
-    'ACTIVEMQ_URL',
+    'RABBITMQ_URL',
   ];
 
   const missing = requiredVars.filter(

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { activemq } from '../config/activemq';
+import { rabbitmq } from '../config/rabbitmq';
 import { database } from '../config/database';
 import { RPC } from '../database/models/RPC';
 import { Event, EventData } from '../database/models/Event';
@@ -29,15 +29,15 @@ export class BlockConsumer {
     try {
       logger.info(`🚀 Iniciando consumidor: ${this.consumerId}`);
 
-      // Conectar a base de datos y ActiveMQ
+      // Conectar a base de datos y RabbitMQ
       await database.connect();
-      await activemq.connect();
+      await rabbitmq.connect();
 
       this.isRunning = true;
 
       // Comenzar a consumir mensajes
-      await activemq.consume(
-        config.activemq.queues.blocks,
+      await rabbitmq.consume(
+        config.rabbitmq.queues.blocks,
         this.processMessage.bind(this)
       );
 
@@ -125,7 +125,6 @@ export class BlockConsumer {
           `(${inserted} eventos, ${(executionTime / 1000).toFixed(2)}s)`
       );
     } catch (error) {
-      const executionTime = Date.now() - startTime;
       logger.error(
         `❌ Error procesando bloques ${message.startBlock}-${message.endBlock}:`,
         error
@@ -192,8 +191,8 @@ export class BlockConsumer {
     for (const event of processedEvents) {
       try {
         // Decodificar signature
-        const eventName = await this.decoder.decodeEventSignature(event.eventSignature);
-
+        //const eventName = await this.decoder.decodeEventSignature(event.eventSignature);
+        const eventName = 'Unknown';
         // Extraer parámetros
         const params = this.decoder.extractParameters(event.data, event.topics);
 
@@ -241,7 +240,7 @@ export class BlockConsumer {
       await this.blockchainService.destroy();
     }
 
-    await activemq.disconnect();
+    await rabbitmq.disconnect();
     await database.disconnect();
 
     logger.info(`👋 Consumidor ${this.consumerId} detenido`);

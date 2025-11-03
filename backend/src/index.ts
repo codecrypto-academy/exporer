@@ -1,5 +1,5 @@
 import { database } from './config/database';
-import { activemq } from './config/activemq';
+import { rabbitmq } from './config/rabbitmq';
 import { logger } from './utils/logger';
 import { config, validateConfig } from './config/environment';
 
@@ -16,8 +16,8 @@ async function main() {
     // Conectar a base de datos
     await database.connect();
 
-    // Conectar a ActiveMQ
-    await activemq.connect();
+    // Conectar a RabbitMQ
+    await rabbitmq.connect();
 
     logger.info('\n✅ Sistema inicializado correctamente');
     logger.info(`   Modo: ${config.nodeEnv}`);

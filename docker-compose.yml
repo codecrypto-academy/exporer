@@ -1,48 +1,45 @@
-version: '3.8'
-
 services:
   # PostgreSQL Database
-  postgres:
-    image: postgres:15-alpine
-    container_name: ethereum-processor-db
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mi_contraseña
-      POSTGRES_DB: ethereum_events
-      POSTGRES_INITDB_ARGS: "-E UTF8"
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./flyway/sql:/docker-entrypoint-initdb.d
-    networks:
-      - ethereum-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: ethereum-processor-db
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: mi_contraseña
+  #     POSTGRES_DB: ethereum_events
+  #     POSTGRES_INITDB_ARGS: "-E UTF8"
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #     - ./flyway/sql:/docker-entrypoint-initdb.d
+  #   networks:
+  #     - ethereum-network
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #   restart: unless-stopped
 
-  # ActiveMQ Message Queue
-  activemq:
-    image: apache/activemq-artemis:2.31-alpine
+  # RabbitMQ Message Queue
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
     container_name: ethereum-processor-queue
     environment:
-      ARTEMIS_USERNAME: admin
-      ARTEMIS_PASSWORD: admin
-      ARTEMIS_MQ_USERNAME: guest
-      ARTEMIS_MQ_PASSWORD: guest
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_VHOST: /
     ports:
-      - "61616:61616" # OpenWire protocol
-      - "8161:8161"   # Web Console
+      - "5672:5672"   # AMQP protocol
+      - "15672:15672" # Management UI
     volumes:
-      - activemq_data:/var/lib/artemis-instance
-      - activemq_logs:/var/log/artemis
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_logs:/var/log/rabbitmq
     networks:
       - ethereum-network
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8161/console || exit 1"]
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -50,11 +47,11 @@ services:
 
   # Flyway for database migrations
   flyway:
-    image: flyway/flyway:9-alpine
+    image: flyway/flyway:11-alpine
     container_name: ethereum-processor-flyway
     command: migrate
     environment:
-      FLYWAY_URL: jdbc:postgresql://postgres:5432/ethereum_events
+      FLYWAY_URL: jdbc:postgresql://my-postgres:5432/ethereum_events
       FLYWAY_USER: postgres
       FLYWAY_PASSWORD: mi_contraseña
       FLYWAY_SCHEMAS: public
@@ -64,9 +61,6 @@ services:
       - ./flyway/flyway.conf:/flyway/conf/flyway.conf
     networks:
       - ethereum-network
-    depends_on:
-      postgres:
-        condition: service_healthy
 
 networks:
   ethereum-network:
@@ -75,7 +69,7 @@ networks:
 volumes:
   postgres_data:
     driver: local
-  activemq_data:
+  rabbitmq_data:
     driver: local
-  activemq_logs:
+  rabbitmq_logs:
     driver: local

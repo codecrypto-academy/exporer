@@ -126,7 +126,7 @@ export class BlockchainService {
           logIndex: log.index,
           contractAddress: log.address,
           eventSignature: log.topics[0] || '',
-          topics: log.topics,
+          topics: [...log.topics],
           data: log.data,
         };
 

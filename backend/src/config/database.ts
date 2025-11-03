@@ -2,6 +2,18 @@ import { Pool, PoolClient, QueryResult } from 'pg';
 import { config } from './environment';
 import { logger } from '../utils/logger';
 
+// Pool de conexiones compartido para uso directo en modelos
+export const pool = new Pool({
+  host: config.database.host,
+  port: config.database.port,
+  user: config.database.user,
+  password: config.database.password,
+  database: config.database.database,
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+});
+
 class Database {
   private pool: Pool | null = null;
 

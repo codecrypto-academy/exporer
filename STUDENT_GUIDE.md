@@ -1,6 +1,6 @@
 ## Guía Rápida para Estudiantes
 
-Objetivo: levantar la infraestructura, preparar el backend y ejecutar el productor/consumidores para procesar bloques de Ethereum usando ActiveMQ.
+Objetivo: levantar la infraestructura, preparar el backend y ejecutar el productor/consumidores para procesar bloques de Ethereum usando RabbitMQ.
 
 ### 1) Requisitos
 - Docker y Docker Compose
@@ -22,11 +22,11 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=mi_contraseña
 POSTGRES_DB=ethereum_events
 
-ACTIVEMQ_URL=ws://localhost:61614
-ACTIVEMQ_HOST=localhost
-ACTIVEMQ_PORT=61614
-ACTIVEMQ_USERNAME=guest
-ACTIVEMQ_PASSWORD=guest
+RABBITMQ_URL=amqp://localhost:5672
+RABBITMQ_HOST=localhost
+RABBITMQ_PORT=5672
+RABBITMQ_USERNAME=guest
+RABBITMQ_PASSWORD=guest
 
 ETHEREUM_START_BLOCK=18000000
 ETHEREUM_END_BLOCK=18001000
@@ -37,13 +37,13 @@ MAX_RETRIES=3
 RETRY_DELAY_MS=5000
 ```
 
-### 4) Levantar infraestructura (PostgreSQL + ActiveMQ + Flyway)
+### 4) Levantar infraestructura (PostgreSQL + RabbitMQ + Flyway)
 Desde la raíz del proyecto (`91_explorer/`):
 ```bash
 docker-compose up -d
 ```
 - PostgreSQL: `localhost:5432`
-- ActiveMQ Web Console: `http://localhost:8161` (admin/admin)
+- RabbitMQ Management UI: `http://localhost:15672` (guest/guest)
 
 ### 5) Preparar base de datos y datos iniciales
 ```bash
@@ -58,7 +58,7 @@ npm run dev
 ```
 
 ### 7) Ejecutar Productor y Consumidores
-- Productor (genera mensajes de rangos de bloques en ActiveMQ):
+- Productor (genera mensajes de rangos de bloques en RabbitMQ):
 ```bash
 npm run start:producer
 ```
@@ -72,7 +72,7 @@ ts-node src/scripts/start-multiple-consumers.ts
 ```
 
 ### 8) Verificación rápida
-- ActiveMQ (Web): `http://localhost:8161` → verifica colas:
+- RabbitMQ (Management UI): `http://localhost:15672` → verifica colas:
   - `ethereum.blocks.queue`
   - `ethereum.blocks.retry.queue`
   - `ethereum.blocks.deadletter.queue`
@@ -80,15 +80,15 @@ ts-node src/scripts/start-multiple-consumers.ts
 - Tablas en PostgreSQL (`events`, `consumer_metrics`, `system_metrics`, `rpcs`)
 
 ### 9) Estructura útil
-- `backend/src/config/activemq.ts`: cliente STOMP de ActiveMQ
+- `backend/src/config/rabbitmq.ts`: cliente AMQP de RabbitMQ
 - `backend/src/queue/producer.ts`: envía mensajes de bloques
 - `backend/src/queue/consumer.ts`: consume y procesa eventos
 - `backend/src/services/*`: lógica de blockchain y decodificación
 
 ### 10) Problemas comunes (y soluciones)
-- No conecta a ActiveMQ:
-  - Asegúrate de `docker-compose up -d` y que la consola `http://localhost:8161` esté accesible
-  - Revisa `.env` (`ACTIVEMQ_*`)
+- No conecta a RabbitMQ:
+  - Asegúrate de `docker-compose up -d` y que la consola `http://localhost:15672` esté accesible
+  - Revisa `.env` (`RABBITMQ_*`)
 - No se crean mensajes:
   - Revisa rangos `ETHEREUM_START_BLOCK`/`ETHEREUM_END_BLOCK`
   - Ejecuta de nuevo el productor
@@ -102,6 +102,9 @@ docker-compose down -v
 docker-compose up -d
 ```
 
-Listo. Con esto deberías poder levantar el stack, producir trabajos y consumirlos para guardar eventos en PostgreSQL usando ActiveMQ.
+Listo. Con esto deberías poder levantar el stack, producir trabajos y consumirlos para guardar eventos en PostgreSQL usando RabbitMQ.
 
-
+### 12) Verificar que RabbitMQ esté funcionando
+```bash
+curl -sf http://localhost:15672 && echo "RabbitMQ is OK" || echo "RabbitMQ is NOT responding"
+```

@@ -5,12 +5,18 @@ import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RPC } from '@/types';
-import { ArrowLeft, CheckCircle, XCircle, Clock, Server } from 'lucide-react';
+import { ArrowLeft, CheckCircle, XCircle, Clock, Server, Plus, Edit2, Trash2 } from 'lucide-react';
 
 export default function RPCsPage() {
   const [rpcs, setRpcs] = useState<RPC[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<number | null>(null);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingRPC, setEditingRPC] = useState<RPC | null>(null);
+  const [newRPC, setNewRPC] = useState({ name: '', url: '' });
+  const [creating, setCreating] = useState(false);
+  const [deleting, setDeleting] = useState<number | null>(null);
 
   const fetchRPCs = async () => {
     try {
@@ -59,6 +65,106 @@ export default function RPCsPage() {
     }
   };
 
+  const createRPC = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreating(true);
+
+    try {
+      const res = await fetch('/api/rpcs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newRPC),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        // Recargar lista de RPCs
+        await fetchRPCs();
+        
+        // Cerrar modal y limpiar formulario
+        setShowAddModal(false);
+        setNewRPC({ name: '', url: '' });
+      } else {
+        alert(data.error || 'Error creando RPC');
+      }
+    } catch (error) {
+      console.error('Error creating RPC:', error);
+      alert('Error creando RPC');
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const updateRPC = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingRPC) return;
+
+    setCreating(true);
+
+    try {
+      const res = await fetch('/api/rpcs', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: editingRPC.id,
+          name: editingRPC.name,
+          url: editingRPC.url,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        await fetchRPCs();
+        setShowEditModal(false);
+        setEditingRPC(null);
+      } else {
+        alert(data.error || 'Error actualizando RPC');
+      }
+    } catch (error) {
+      console.error('Error updating RPC:', error);
+      alert('Error actualizando RPC');
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const deleteRPC = async (id: number, name: string) => {
+    if (!confirm(`¿Estás seguro de eliminar el RPC "${name}"?`)) {
+      return;
+    }
+
+    setDeleting(id);
+
+    try {
+      const res = await fetch('/api/rpcs', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        await fetchRPCs();
+      } else {
+        alert(data.error || 'Error eliminando RPC');
+      }
+    } catch (error) {
+      console.error('Error deleting RPC:', error);
+      alert('Error eliminando RPC');
+    } finally {
+      setDeleting(null);
+    }
+  };
+
   useEffect(() => {
     fetchRPCs();
 
@@ -103,6 +209,13 @@ export default function RPCsPage() {
                 </p>
               </div>
             </div>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+            >
+              <Plus className="w-5 h-5" />
+              Añadir RPC
+            </button>
           </div>
         </div>
       </header>
@@ -226,21 +339,42 @@ export default function RPCsPage() {
                         {rpc.last_block?.toLocaleString() || '-'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <button
-                          onClick={() => toggleRPC(rpc.id, rpc.active)}
-                          disabled={updating === rpc.id || rpc.in_use}
-                          className={`px-3 py-1 rounded-lg font-medium transition-colors ${
-                            rpc.active
-                              ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50'
-                              : 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50'
-                          } disabled:opacity-50 disabled:cursor-not-allowed`}
-                        >
-                          {updating === rpc.id
-                            ? 'Actualizando...'
-                            : rpc.active
-                            ? 'Desactivar'
-                            : 'Activar'}
-                        </button>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => toggleRPC(rpc.id, rpc.active)}
+                            disabled={updating === rpc.id || rpc.in_use}
+                            className={`px-3 py-1 rounded-lg font-medium transition-colors ${
+                              rpc.active
+                                ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50'
+                                : 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50'
+                            } disabled:opacity-50 disabled:cursor-not-allowed`}
+                          >
+                            {updating === rpc.id
+                              ? 'Actualizando...'
+                              : rpc.active
+                              ? 'Desactivar'
+                              : 'Activar'}
+                          </button>
+                          <button
+                            onClick={() => {
+                              setEditingRPC(rpc);
+                              setShowEditModal(true);
+                            }}
+                            disabled={rpc.in_use}
+                            className="p-2 text-blue-600 hover:bg-blue-100 dark:text-blue-400 dark:hover:bg-blue-900/30 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            title="Editar RPC"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => deleteRPC(rpc.id, rpc.name)}
+                            disabled={rpc.in_use || deleting === rpc.id}
+                            className="p-2 text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/30 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            title="Eliminar RPC"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -250,6 +384,134 @@ export default function RPCsPage() {
           </CardContent>
         </Card>
       </main>
+
+      {/* Modal para Añadir RPC */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl max-w-md w-full">
+            <div className="p-6">
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
+                Añadir Nuevo RPC
+              </h2>
+              
+              <form onSubmit={createRPC}>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                      Nombre
+                    </label>
+                    <input
+                      type="text"
+                      value={newRPC.name}
+                      onChange={(e) => setNewRPC({ ...newRPC, name: e.target.value })}
+                      className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Ej: Alchemy Mainnet"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                      URL
+                    </label>
+                    <input
+                      type="url"
+                      value={newRPC.url}
+                      onChange={(e) => setNewRPC({ ...newRPC, url: e.target.value })}
+                      className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                      placeholder="https://eth-mainnet.g.alchemy.com/v2/..."
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-3 mt-6">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowAddModal(false);
+                      setNewRPC({ name: '', url: '' });
+                    }}
+                    className="flex-1 px-4 py-2 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={creating}
+                    className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {creating ? 'Creando...' : 'Crear RPC'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal para Editar RPC */}
+      {showEditModal && editingRPC && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl max-w-md w-full">
+            <div className="p-6">
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
+                Editar RPC
+              </h2>
+              
+              <form onSubmit={updateRPC}>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                      Nombre
+                    </label>
+                    <input
+                      type="text"
+                      value={editingRPC.name}
+                      onChange={(e) => setEditingRPC({ ...editingRPC, name: e.target.value })}
+                      className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                      URL
+                    </label>
+                    <input
+                      type="url"
+                      value={editingRPC.url}
+                      onChange={(e) => setEditingRPC({ ...editingRPC, url: e.target.value })}
+                      className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-3 mt-6">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowEditModal(false);
+                      setEditingRPC(null);
+                    }}
+                    className="flex-1 px-4 py-2 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={creating}
+                    className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {creating ? 'Guardando...' : 'Guardar Cambios'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

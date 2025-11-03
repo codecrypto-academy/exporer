@@ -27,8 +27,8 @@ graph TB
         end
     end
 
-    subgraph "🔄 CAPA DE MENSAJERÍA - ActiveMQ"
-        ACTIVEMQ[ActiveMQ Artemis<br/>:61616]
+    subgraph "🔄 CAPA DE MENSAJERÍA - RabbitMQ"
+        RABBITMQ[RabbitMQ<br/>:5672]
 
         subgraph "📬 Colas"
             Q_MAIN[Cola Principal<br/>ethereum.blocks.queue]
@@ -76,7 +76,7 @@ graph TB
 
     subgraph "🐳 INFRAESTRUCTURA - Docker"
         DOCKER_PG[Container PostgreSQL]
-        DOCKER_ACTIVEMQ[Container ActiveMQ Artemis]
+        DOCKER_RABBITMQ[Container RabbitMQ]
         DOCKER_FLYWAY[Container Flyway<br/>Migraciones]
     end
 
@@ -102,18 +102,18 @@ graph TB
     DB --> T_CONSUMER
     DB --> T_SYSTEM
 
-    %% Relaciones Productor -> ActiveMQ
+    %% Relaciones Productor -> RabbitMQ
     PRODUCER -->|Publica mensajes<br/>rangos bloques| Q_MAIN
 
-    %% Relaciones ActiveMQ
-    ACTIVEMQ --> Q_MAIN
-    ACTIVEMQ --> Q_RETRY
-    ACTIVEMQ --> Q_DEAD
+    %% Relaciones RabbitMQ
+    RABBITMQ --> Q_MAIN
+    RABBITMQ --> Q_RETRY
+    RABBITMQ --> Q_DEAD
     Q_MAIN -->|En caso de error| Q_RETRY
     Q_RETRY -->|Después de TTL| Q_MAIN
     Q_MAIN -->|Fallos repetidos| Q_DEAD
 
-    %% Relaciones Consumers -> ActiveMQ
+    %% Relaciones Consumers -> RabbitMQ
     Q_MAIN -->|Consume mensajes| C1
     Q_MAIN -->|Consume mensajes| C2
     Q_MAIN -->|Consume mensajes| C3
@@ -178,7 +178,7 @@ graph TB
 
     %% Relaciones Docker
     DOCKER_PG -.->|Contiene| DB
-    DOCKER_ACTIVEMQ -.->|Contiene| ACTIVEMQ
+    DOCKER_RABBITMQ -.->|Contiene| RABBITMQ
     DOCKER_FLYWAY -.->|Ejecuta migraciones| DB
 
     %% Estilos
@@ -194,11 +194,11 @@ graph TB
     class WEB,BROWSER webStyle
     class API_METRICS,API_RPCS,API_CONSUMERS,API_EVENTS apiStyle
     class DB,T_RPCS,T_EVENTS,T_CONSUMER,T_SYSTEM dbStyle
-    class ACTIVEMQ,Q_MAIN,Q_RETRY,Q_DEAD queueStyle
+    class RABBITMQ,Q_MAIN,Q_RETRY,Q_DEAD queueStyle
     class C1,C2,C3,C4,C5,PRODUCER workerStyle
     class SVC_BLOCKCHAIN,SVC_DECODER,SVC_RPC_POOL,SVC_METRICS serviceStyle
     class RPC1,RPC2,RPC3,RPC4,RPC5,RPC_MORE,FOURBYTE,ETHEREUM externalStyle
-    class DOCKER_PG,DOCKER_ACTIVEMQ,DOCKER_FLYWAY dockerStyle
+    class DOCKER_PG,DOCKER_RABBITMQ,DOCKER_FLYWAY dockerStyle
 ```
 
 ---
@@ -215,9 +215,9 @@ Usuario → Panel Web → API REST → PostgreSQL → Respuesta JSON → Renderi
 ```
 1. Productor
    └─> Genera mensaje: {startBlock: 18000000, endBlock: 18000100}
-   └─> Publica en ActiveMQ (Cola Principal)
+   └─> Publica en RabbitMQ (Cola Principal)
 
-2. ActiveMQ
+2. RabbitMQ
    └─> Distribuye mensaje a Consumer disponible
 
 3. Consumer (Worker)
@@ -273,7 +273,7 @@ Usuario → Panel Web → PATCH /api/rpcs
 ┌─────────────────────────────────────────────────────────────┐
 │                ⚙️ Backend (TypeScript)                      │
 │                                                              │
-│  📤 Productor ──────▶ 🔄 ActiveMQ Queues                   │
+│  📤 Productor ──────▶ 🔄 RabbitMQ Queues                   │
 │                           │                                  │
 │                           ├─▶ 👷 Consumer 1 ← RPC 1        │
 │                           ├─▶ 👷 Consumer 2 ← RPC 2        │
@@ -325,7 +325,7 @@ Usuario → Panel Web → PATCH /api/rpcs
 | **consumer_metrics** | Métricas por cada ejecución de worker |
 | **system_metrics** | Métricas globales agregadas |
 
-### ActiveMQ
+### RabbitMQ
 | Cola | Propósito |
 |------|-----------|
 | **ethereum.blocks.queue** | Cola principal de trabajo |
@@ -339,15 +339,15 @@ Usuario → Panel Web → PATCH /api/rpcs
 ### Protocolos
 - **HTTP/REST**: Panel Web ↔ API Routes
 - **PostgreSQL Wire Protocol**: APIs ↔ PostgreSQL
-- **STOMP**: Backend ↔ ActiveMQ
+- **AMQP**: Backend ↔ RabbitMQ
 - **JSON-RPC**: Ethers.js ↔ RPCs Ethereum
 - **HTTPS**: Event Decoder ↔ 4byte.directory
 
 ### Puertos
 - `3000`: Panel Web (Next.js)
 - `5432`: PostgreSQL
-- `61616`: ActiveMQ (OpenWire)
-- `8161`: ActiveMQ Web Console
+- `5672`: RabbitMQ (AMQP)
+- `15672`: RabbitMQ Management UI
 
 ---
 
@@ -412,7 +412,7 @@ Usuario → Panel Web → PATCH /api/rpcs
 ```
 1. [Productor] Genera mensaje
    ↓
-2. [ActiveMQ] Almacena en cola
+2. [RabbitMQ] Almacena en cola
    ↓
 3. [Consumer] Consume mensaje
    ↓
@@ -428,7 +428,7 @@ Usuario → Panel Web → PATCH /api/rpcs
    ↓
 9. [RPC Pool] Libera RPC
    ↓
-10. [ActiveMQ] ACK mensaje (completado)
+10. [RabbitMQ] ACK mensaje (completado)
 ```
 
 ---

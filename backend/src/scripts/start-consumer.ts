@@ -30,7 +30,7 @@ async function main() {
     process.exit(1);
   });
 
-  process.on('unhandledRejection', async (reason, promise) => {
+  process.on('unhandledRejection', async (reason, _promise) => {
     logger.error('❌ Promesa rechazada no manejada:', reason);
     await consumer.stop();
     process.exit(1);
